@@ -70,10 +70,14 @@ class SimulatorWrapper:
             line = self.process.stdout.readline()
             if line == '\n':
                 new_lines += 1
-            elif line.startswith('|win|'):
-                return {"winner": line.strip().split('|win|')[1]}
+            elif line.strip() == 'end':
+                # The game has ended; handle the different format
+                logging.debug("Handling end of game...")
+                log = json.loads(self.process.stdout.readline())
+                return {'state': output_blocks[0], 'log': log}
             else:
                 output_blocks[new_lines].append(line.strip())
+        # Otherwise, assume we have a standard p1/p2/state block
         dict_output = {}
         dict_output['p1'] = json.loads(
             output_blocks[0][2].split('|request|')[1])
@@ -89,6 +93,7 @@ class SimulatorWrapper:
         logging.debug("Running command: " + command.strip())
         self.process.stdin.write(command + '\n')
         self.process.stdin.flush()
+
 
 def get_options(player_identifier, side_data):
     options = []
@@ -112,14 +117,14 @@ def get_options(player_identifier, side_data):
 
 def main():
     # Configure logging
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(levelname)s - %(message)s')
 
     pp = pprint.PrettyPrinter(indent=2)
     simulator = SimulatorWrapper()
 
     game_state = simulator.initialize_battle()
-    pp.pprint(game_state)
+    logging.debug(pp.pformat(game_state['state']))
 
     while True:
         # All non-waiting players must make a decision
@@ -129,11 +134,13 @@ def main():
                 continue
             options = get_options(player_id, game_state[player_id])
             logging.debug(f"{player_id} options: " + ', '.join(options))
-            decisions.append(options[0]) # For now, just pick the first option
+            decisions.append(options[0])  # For now, just pick the first option
         game_state = simulator.make_move(decisions)
-        pp.pprint(game_state['state'] if 'state' in game_state else game_state)
-        if 'winner' in game_state:
-            logging.info(f"Winner: {game_state['winner']}")
+        logging.debug(pp.pformat(game_state['state']))
+
+        # TODO: Maybe use a different signal for the game ending? Something very explicit like "ended: true"?
+        if 'log' in game_state:
+            logging.info(f"Winner: {game_state['log']['winner']}")
             break
 
     # TODO: How do we handle winning/losing/other terminal states?
