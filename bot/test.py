@@ -60,6 +60,26 @@ class SimulatorWrapper:
             self.__perform_action(command)
         return self.__collect_game_state()
 
+    def get_options(player_identifier, side_data):
+        options = []
+        if 'active' in side_data:
+            for move in side_data['active'][0]['moves']:
+                if 'disabled' in move and move['disabled']:
+                    continue
+                if 'pp' in move and move['pp'] == 0:
+                    continue
+                # TODO: Also eliminate moves with no valid targets
+                options.append(f">{player_identifier} move {move['id']}")
+        for index, pokemon in enumerate(side_data['side']['pokemon']):
+            if pokemon['active']:
+                continue
+            if pokemon['condition'] == '0 fnt':
+                continue
+            # Switches are 1-indexed
+            options.append(f">{player_identifier} switch {index + 1}")
+        return options
+
+
     def __collect_game_state(self):
         """
         Collects a dict representing the current state of the game from the simulator's stdout. The dict contains the following keys:
@@ -95,24 +115,7 @@ class SimulatorWrapper:
         self.process.stdin.flush()
 
 
-def get_options(player_identifier, side_data):
-    options = []
-    if 'active' in side_data:
-        for move in side_data['active'][0]['moves']:
-            if 'disabled' in move and move['disabled']:
-                continue
-            if 'pp' in move and move['pp'] == 0:
-                continue
-            # TODO: Also eliminate moves with no valid targets
-            options.append(f">{player_identifier} move {move['id']}")
-    for index, pokemon in enumerate(side_data['side']['pokemon']):
-        if pokemon['active']:
-            continue
-        if pokemon['condition'] == '0 fnt':
-            continue
-        # Switches are 1-indexed
-        options.append(f">{player_identifier} switch {index + 1}")
-    return options
+
 
 
 def main():
@@ -132,7 +135,7 @@ def main():
         for player_id in ['p1', 'p2']:
             if 'wait' in game_state[player_id] and game_state[player_id]['wait']:
                 continue
-            options = get_options(player_id, game_state[player_id])
+            options = simulator.get_options(player_id, game_state[player_id])
             logging.debug(f"{player_id} options: " + ', '.join(options))
             decisions.append(options[0])  # For now, just pick the first option
         game_state = simulator.make_move(decisions)
