@@ -1,0 +1,145 @@
+>start {"formatid":"gen9vgc2024regh"}
+>player p1 {"name":"Alice"}
+>player p2 {"name":"Bob"}
+
+// Once both players have locked in, the round resolves
+>p1 move 2
+>p2 move 2
+>p2 switch 3
+
+
+// Scratchpad
+>start {"formatid":"gen7ou"}
+
+$formats = array(
+	'gen9randombattle' => 'Random Battle',
+	'gen9ou' => 'OverUsed',
+	'gen9ubers' => 'Ubers',
+	'gen9uu' => 'UnderUsed',
+	'gen9ru' => 'RarelyUsed',
+	'gen9nu' => 'NeverUsed',
+	'gen9pu' => 'PU',
+	'gen9lc' => 'Little Cup',
+	'gen9monotype' => 'Monotype',
+	'gen9bssregh' => 'Battle Stadium Singles Regulation H',
+	'gen9cap' => 'CAP',
+	'gen9randomdoublesbattle' => 'Random Doubles Battle',
+	'gen9doublesou' => 'Doubles OU',
+	'gen9vgc2024regh' => 'VGC 2024 Regulation H',
+	'gen9almostanyability' => 'Almost Any Ability',
+	'gen9balancedhackmons' => 'Balanced Hackmons',
+	'gen9godlygift' => 'Godly Gift',
+	'gen9inheritance' => 'Inheritance',
+	'gen9mixandmega' => 'Mix and Mega',
+	'gen9partnersincrime' => 'Partners in Crime',
+	'gen9sharedpower' => 'Shared Power',
+	'gen9stabmons' => 'STABmons',
+	'gen9nationaldex' => 'National Dex OU',
+	'gen9nationaldexubers' => 'National Dex Ubers',
+	'gen9nationaldexuu' => 'National Dex UU',
+	'gen9nationaldexmonotype' => 'National Dex Monotype',
+	'gen9nationaldexdoubles' => 'National Dex Doubles',
+	'gen8randombattle' => '[Gen 8] Random Battle',
+	'gen8ou' => '[Gen 8] OU',
+	'gen7randombattle' => '[Gen 7] Random Battle',
+	'gen7ou' => '[Gen 7] OU',
+	'gen6randombattle' => '[Gen 6] Random Battle',
+	'gen6ou' => '[Gen 6] OU',
+	'gen5randombattle' => '[Gen 5] Random Battle',
+	'gen5ou' => '[Gen 5] OU',
+	'gen4ou' => '[Gen 4] OU',
+	'gen3ou' => '[Gen 3] OU',
+	'gen2ou' => '[Gen 2] OU',
+	'gen1ou' => '[Gen 1] OU',
+
+
+
+    (.venv) boreal@SONGBIRD:~/workspace/ShowdownTestGrounds$ /home/boreal/workspace/ShowdownTestGrounds/pokemon-showdown-0.11.9/pokemon-showdown simulate-battle
+    >start {"formatid":"gen9vgc2024regh"}
+    update
+    |t:|1738741556
+    |gametype|singles
+    
+    >player p1 {"name":"Alice"}
+    update
+    |player|p1|Alice||
+    
+    >player p2 {"name":"Bob"}
+    sideupdate
+    p1
+    |request|{"active":[{"moves":[{"move":"Nasty Plot","id":"nastyplot","pp":32,"maxpp":32,"target":"self","disabled":false},{"move":"Earth Power","id":"earthpower","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Psyshock","id":"psyshock","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Aura Sphere","id":"aurasphere","pp":32,"maxpp":32,"target":"any","disabled":false}],"canTerastallize":"Fighting"}],"side":{"name":"Alice","id":"p1","pokemon":[{"ident":"p1: Mew","details":"Mew, L81","condition":"295/295","active":true,"stats":{"atk":167,"def":209,"spa":209,"spd":209,"spe":209},"moves":["nastyplot","earthpower","psyshock","aurasphere"],"baseAbility":"synchronize","item":"lifeorb","pokeball":"pokeball","ability":"synchronize","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Annihilape","details":"Annihilape, L77, M","condition":"296/296","active":false,"stats":{"atk":222,"def":168,"spa":122,"spd":183,"spe":183},"moves":["bulkup","drainpunch","ragefist","gunkshot"],"baseAbility":"defiant","item":"leftovers","pokeball":"pokeball","ability":"defiant","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Vaporeon","details":"Vaporeon, L85, M","condition":"360/360","active":false,"stats":{"atk":115,"def":151,"spa":236,"spd":210,"spe":159},"moves":["surf","wish","protect","icebeam"],"baseAbility":"waterabsorb","item":"leftovers","pokeball":"pokeball","ability":"waterabsorb","commanding":false,"reviving":false,"teraType":"Ghost","terastallized":""},{"ident":"p1: Jumpluff","details":"Jumpluff, L86, M","condition":"269/269","active":false,"stats":{"atk":144,"def":170,"spa":144,"spd":213,"spe":238},"moves":["encore","acrobatics","sleeppowder","uturn"],"baseAbility":"infiltrator","item":"","pokeball":"pokeball","ability":"infiltrator","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Oranguru","details":"Oranguru, L91, M","condition":"312/312","active":false,"stats":{"atk":114,"def":197,"spa":216,"spd":252,"spe":161},"moves":["psyshock","thunderbolt","focusblast","nastyplot"],"baseAbility":"innerfocus","item":"leftovers","pokeball":"pokeball","ability":"innerfocus","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Mabosstiff","details":"Mabosstiff, L84, F","condition":"272/272","active":false,"stats":{"atk":250,"def":199,"spa":149,"spd":166,"spe":191},"moves":["firefang","playrough","crunch","wildcharge"],"baseAbility":"stakeout","item":"choiceband","pokeball":"pokeball","ability":"stakeout","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]},"noCancel":true}
+    
+    sideupdate
+    p2
+    |request|{"active":[{"moves":[{"move":"Leaf Blade","id":"leafblade","pp":24,"maxpp":24,"target":"normal","disabled":false},{"move":"Megahorn","id":"megahorn","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Close Combat","id":"closecombat","pp":8,"maxpp":8,"target":"normal","disabled":false},{"move":"Wild Charge","id":"wildcharge","pp":24,"maxpp":24,"target":"normal","disabled":false}],"canTerastallize":"Fighting"}],"side":{"name":"Bob","id":"p2","pokemon":[{"ident":"p2: Iron Leaves","details":"Iron Leaves, L81","condition":"278/278","active":true,"stats":{"atk":257,"def":189,"spa":160,"spd":222,"spe":215},"moves":["leafblade","megahorn","closecombat","wildcharge"],"baseAbility":"quarkdrive","item":"choiceband","pokeball":"pokeball","ability":"quarkdrive","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p2: Samurott","details":"Samurott-Hisui, L79, F","condition":"272/272","active":false,"stats":{"atk":216,"def":172,"spa":204,"spd":148,"spe":180},"moves":["razorshell","aquajet","suckerpunch","ceaselessedge"],"baseAbility":"sharpness","item":"choiceband","pokeball":"pokeball","ability":"sharpness","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Eiscue","details":"Eiscue, L85, M","condition":"266/266","active":false,"stats":{"atk":185,"def":236,"spa":159,"spd":202,"spe":134},"moves":["liquidation","icespinner","bellydrum","zenheadbutt"],"baseAbility":"iceface","item":"sitrusberry","pokeball":"pokeball","ability":"iceface","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Tyranitar","details":"Tyranitar, L81, M","condition":"295/295","active":false,"stats":{"atk":264,"def":225,"spa":201,"spd":209,"spe":145},"moves":["icebeam","thunderwave","crunch","stoneedge"],"baseAbility":"sandstream","item":"leftovers","pokeball":"pokeball","ability":"sandstream","commanding":false,"reviving":false,"teraType":"Poison","terastallized":""},{"ident":"p2: Slither Wing","details":"Slither Wing, L82","condition":"274/274","active":false,"stats":{"atk":269,"def":177,"spa":187,"spd":219,"spe":180},"moves":["uturn","closecombat","earthquake","wildcharge"],"baseAbility":"protosynthesis","item":"choiceband","pokeball":"pokeball","ability":"protosynthesis","commanding":false,"reviving":false,"teraType":"Electric","terastallized":""},{"ident":"p2: Drifblim","details":"Drifblim, L86, F","condition":"398/398","active":false,"stats":{"atk":142,"def":125,"spa":204,"spd":142,"spe":187},"moves":["airslash","defog","strengthsap","shadowball"],"baseAbility":"aftermath","item":"heavydutyboots","pokeball":"pokeball","ability":"aftermath","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]},"noCancel":true}
+    
+    update
+    |player|p2|Bob||
+    |teamsize|p1|6
+    |teamsize|p2|6
+    |gen|9
+    |tier|gen9vgc2024regh
+    |
+    |t:|1738741569
+    |start
+    |split|p1
+    |switch|p1a: Mew|Mew, L81|295/295
+    |switch|p1a: Mew|Mew, L81|100/100
+    |split|p2
+    |switch|p2a: Iron Leaves|Iron Leaves, L81|278/278
+    |switch|p2a: Iron Leaves|Iron Leaves, L81|100/100
+    |turn|1
+    
+    >p1 move 2
+    >p2 move 2
+    sideupdate
+    p1
+    |request|{"active":[{"moves":[{"move":"Nasty Plot","id":"nastyplot","pp":32,"maxpp":32,"target":"self","disabled":false},{"move":"Earth Power","id":"earthpower","pp":15,"maxpp":16,"target":"normal","disabled":false},{"move":"Psyshock","id":"psyshock","pp":16,"maxpp":16,"target":"normal","disabled":false},{"move":"Aura Sphere","id":"aurasphere","pp":32,"maxpp":32,"target":"any","disabled":false}],"canTerastallize":"Fighting"}],"side":{"name":"Alice","id":"p1","pokemon":[{"ident":"p1: Mew","details":"Mew, L81","condition":"8/295","active":true,"stats":{"atk":167,"def":209,"spa":209,"spd":209,"spe":209},"moves":["nastyplot","earthpower","psyshock","aurasphere"],"baseAbility":"synchronize","item":"lifeorb","pokeball":"pokeball","ability":"synchronize","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Annihilape","details":"Annihilape, L77, M","condition":"296/296","active":false,"stats":{"atk":222,"def":168,"spa":122,"spd":183,"spe":183},"moves":["bulkup","drainpunch","ragefist","gunkshot"],"baseAbility":"defiant","item":"leftovers","pokeball":"pokeball","ability":"defiant","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Vaporeon","details":"Vaporeon, L85, M","condition":"360/360","active":false,"stats":{"atk":115,"def":151,"spa":236,"spd":210,"spe":159},"moves":["surf","wish","protect","icebeam"],"baseAbility":"waterabsorb","item":"leftovers","pokeball":"pokeball","ability":"waterabsorb","commanding":false,"reviving":false,"teraType":"Ghost","terastallized":""},{"ident":"p1: Jumpluff","details":"Jumpluff, L86, M","condition":"269/269","active":false,"stats":{"atk":144,"def":170,"spa":144,"spd":213,"spe":238},"moves":["encore","acrobatics","sleeppowder","uturn"],"baseAbility":"infiltrator","item":"","pokeball":"pokeball","ability":"infiltrator","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Oranguru","details":"Oranguru, L91, M","condition":"312/312","active":false,"stats":{"atk":114,"def":197,"spa":216,"spd":252,"spe":161},"moves":["psyshock","thunderbolt","focusblast","nastyplot"],"baseAbility":"innerfocus","item":"leftovers","pokeball":"pokeball","ability":"innerfocus","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Mabosstiff","details":"Mabosstiff, L84, F","condition":"272/272","active":false,"stats":{"atk":250,"def":199,"spa":149,"spd":166,"spe":191},"moves":["firefang","playrough","crunch","wildcharge"],"baseAbility":"stakeout","item":"choiceband","pokeball":"pokeball","ability":"stakeout","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]},"noCancel":true}
+    
+    sideupdate
+    p2
+    |request|{"active":[{"moves":[{"move":"Leaf Blade","id":"leafblade","pp":24,"maxpp":24,"target":"normal","disabled":true},{"move":"Megahorn","id":"megahorn","pp":15,"maxpp":16,"target":"normal","disabled":false},{"move":"Close Combat","id":"closecombat","pp":8,"maxpp":8,"target":"normal","disabled":true},{"move":"Wild Charge","id":"wildcharge","pp":24,"maxpp":24,"target":"normal","disabled":true}],"canTerastallize":"Fighting"}],"side":{"name":"Bob","id":"p2","pokemon":[{"ident":"p2: Iron Leaves","details":"Iron Leaves, L81","condition":"243/278","active":true,"stats":{"atk":257,"def":189,"spa":160,"spd":222,"spe":215},"moves":["leafblade","megahorn","closecombat","wildcharge"],"baseAbility":"quarkdrive","item":"choiceband","pokeball":"pokeball","ability":"quarkdrive","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p2: Samurott","details":"Samurott-Hisui, L79, F","condition":"272/272","active":false,"stats":{"atk":216,"def":172,"spa":204,"spd":148,"spe":180},"moves":["razorshell","aquajet","suckerpunch","ceaselessedge"],"baseAbility":"sharpness","item":"choiceband","pokeball":"pokeball","ability":"sharpness","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Eiscue","details":"Eiscue, L85, M","condition":"266/266","active":false,"stats":{"atk":185,"def":236,"spa":159,"spd":202,"spe":134},"moves":["liquidation","icespinner","bellydrum","zenheadbutt"],"baseAbility":"iceface","item":"sitrusberry","pokeball":"pokeball","ability":"iceface","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Tyranitar","details":"Tyranitar, L81, M","condition":"295/295","active":false,"stats":{"atk":264,"def":225,"spa":201,"spd":209,"spe":145},"moves":["icebeam","thunderwave","crunch","stoneedge"],"baseAbility":"sandstream","item":"leftovers","pokeball":"pokeball","ability":"sandstream","commanding":false,"reviving":false,"teraType":"Poison","terastallized":""},{"ident":"p2: Slither Wing","details":"Slither Wing, L82","condition":"274/274","active":false,"stats":{"atk":269,"def":177,"spa":187,"spd":219,"spe":180},"moves":["uturn","closecombat","earthquake","wildcharge"],"baseAbility":"protosynthesis","item":"choiceband","pokeball":"pokeball","ability":"protosynthesis","commanding":false,"reviving":false,"teraType":"Electric","terastallized":""},{"ident":"p2: Drifblim","details":"Drifblim, L86, F","condition":"398/398","active":false,"stats":{"atk":142,"def":125,"spa":204,"spd":142,"spe":187},"moves":["airslash","defog","strengthsap","shadowball"],"baseAbility":"aftermath","item":"heavydutyboots","pokeball":"pokeball","ability":"aftermath","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]},"noCancel":true}
+    
+    update
+    |
+    |t:|1738741582
+    |move|p2a: Iron Leaves|Megahorn|p1a: Mew
+    |-supereffective|p1a: Mew
+    |split|p1
+    |-damage|p1a: Mew|37/295
+    |-damage|p1a: Mew|13/100
+    |move|p1a: Mew|Earth Power|p2a: Iron Leaves
+    |-resisted|p2a: Iron Leaves
+    |split|p2
+    |-damage|p2a: Iron Leaves|243/278
+    |-damage|p2a: Iron Leaves|88/100
+    |split|p1
+    |-damage|p1a: Mew|8/295|[from] item: Life Orb
+    |-damage|p1a: Mew|3/100|[from] item: Life Orb
+    |
+    |upkeep
+    |turn|2
+    
+    >p1 move 2
+    >p2 move 2
+    sideupdate
+    p1
+    |request|{"forceSwitch":[true],"side":{"name":"Alice","id":"p1","pokemon":[{"ident":"p1: Mew","details":"Mew, L81","condition":"0 fnt","active":true,"stats":{"atk":167,"def":209,"spa":209,"spd":209,"spe":209},"moves":["nastyplot","earthpower","psyshock","aurasphere"],"baseAbility":"synchronize","item":"lifeorb","pokeball":"pokeball","ability":"synchronize","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Annihilape","details":"Annihilape, L77, M","condition":"296/296","active":false,"stats":{"atk":222,"def":168,"spa":122,"spd":183,"spe":183},"moves":["bulkup","drainpunch","ragefist","gunkshot"],"baseAbility":"defiant","item":"leftovers","pokeball":"pokeball","ability":"defiant","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Vaporeon","details":"Vaporeon, L85, M","condition":"360/360","active":false,"stats":{"atk":115,"def":151,"spa":236,"spd":210,"spe":159},"moves":["surf","wish","protect","icebeam"],"baseAbility":"waterabsorb","item":"leftovers","pokeball":"pokeball","ability":"waterabsorb","commanding":false,"reviving":false,"teraType":"Ghost","terastallized":""},{"ident":"p1: Jumpluff","details":"Jumpluff, L86, M","condition":"269/269","active":false,"stats":{"atk":144,"def":170,"spa":144,"spd":213,"spe":238},"moves":["encore","acrobatics","sleeppowder","uturn"],"baseAbility":"infiltrator","item":"","pokeball":"pokeball","ability":"infiltrator","commanding":false,"reviving":false,"teraType":"Steel","terastallized":""},{"ident":"p1: Oranguru","details":"Oranguru, L91, M","condition":"312/312","active":false,"stats":{"atk":114,"def":197,"spa":216,"spd":252,"spe":161},"moves":["psyshock","thunderbolt","focusblast","nastyplot"],"baseAbility":"innerfocus","item":"leftovers","pokeball":"pokeball","ability":"innerfocus","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p1: Mabosstiff","details":"Mabosstiff, L84, F","condition":"272/272","active":false,"stats":{"atk":250,"def":199,"spa":149,"spd":166,"spe":191},"moves":["firefang","playrough","crunch","wildcharge"],"baseAbility":"stakeout","item":"choiceband","pokeball":"pokeball","ability":"stakeout","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]},"noCancel":true}
+    
+    sideupdate
+    p2
+    |request|{"wait":true,"side":{"name":"Bob","id":"p2","pokemon":[{"ident":"p2: Iron Leaves","details":"Iron Leaves, L81","condition":"243/278","active":true,"stats":{"atk":257,"def":189,"spa":160,"spd":222,"spe":215},"moves":["leafblade","megahorn","closecombat","wildcharge"],"baseAbility":"quarkdrive","item":"choiceband","pokeball":"pokeball","ability":"quarkdrive","commanding":false,"reviving":false,"teraType":"Fighting","terastallized":""},{"ident":"p2: Samurott","details":"Samurott-Hisui, L79, F","condition":"272/272","active":false,"stats":{"atk":216,"def":172,"spa":204,"spd":148,"spe":180},"moves":["razorshell","aquajet","suckerpunch","ceaselessedge"],"baseAbility":"sharpness","item":"choiceband","pokeball":"pokeball","ability":"sharpness","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Eiscue","details":"Eiscue, L85, M","condition":"266/266","active":false,"stats":{"atk":185,"def":236,"spa":159,"spd":202,"spe":134},"moves":["liquidation","icespinner","bellydrum","zenheadbutt"],"baseAbility":"iceface","item":"sitrusberry","pokeball":"pokeball","ability":"iceface","commanding":false,"reviving":false,"teraType":"Water","terastallized":""},{"ident":"p2: Tyranitar","details":"Tyranitar, L81, M","condition":"295/295","active":false,"stats":{"atk":264,"def":225,"spa":201,"spd":209,"spe":145},"moves":["icebeam","thunderwave","crunch","stoneedge"],"baseAbility":"sandstream","item":"leftovers","pokeball":"pokeball","ability":"sandstream","commanding":false,"reviving":false,"teraType":"Poison","terastallized":""},{"ident":"p2: Slither Wing","details":"Slither Wing, L82","condition":"274/274","active":false,"stats":{"atk":269,"def":177,"spa":187,"spd":219,"spe":180},"moves":["uturn","closecombat","earthquake","wildcharge"],"baseAbility":"protosynthesis","item":"choiceband","pokeball":"pokeball","ability":"protosynthesis","commanding":false,"reviving":false,"teraType":"Electric","terastallized":""},{"ident":"p2: Drifblim","details":"Drifblim, L86, F","condition":"398/398","active":false,"stats":{"atk":142,"def":125,"spa":204,"spd":142,"spe":187},"moves":["airslash","defog","strengthsap","shadowball"],"baseAbility":"aftermath","item":"heavydutyboots","pokeball":"pokeball","ability":"aftermath","commanding":false,"reviving":false,"teraType":"Fairy","terastallized":""}]}}
+    
+    update
+    |
+    |t:|1738741591
+    |move|p2a: Iron Leaves|Megahorn|p1a: Mew
+    |-supereffective|p1a: Mew
+    |split|p1
+    |-damage|p1a: Mew|0 fnt
+    |-damage|p1a: Mew|0 fnt
+    |faint|p1a: Mew
+    |
+    |upkeep
+    
+    
