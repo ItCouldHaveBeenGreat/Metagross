@@ -60,7 +60,7 @@ class SimulatorWrapper:
             self.__perform_action(command)
         return self.__collect_game_state()
 
-    def get_options(player_identifier, side_data):
+    def get_options(self, player_identifier, side_data):
         options = []
         if 'active' in side_data:
             for move in side_data['active'][0]['moves']:
