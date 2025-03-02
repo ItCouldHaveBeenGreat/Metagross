@@ -96,7 +96,8 @@ class ShowdownEngine(SimulationEngine):
         """
         # For now, just hardcode the actions to set up a random battle
         # TODO: Add cleanup function or just include it here?
-        simulate_start = ['>start {"formatid":"gen7randombattle"}',
+        # 		'gen9customgame', 'gen9doublescustomgame',
+        simulate_start = ['>start {"formatid":"gen9customgame"}',
                           '>player p1 {"name":"p1"}',
                           ]
         for command in simulate_start:
