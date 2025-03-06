@@ -1,5 +1,5 @@
 __pycache__/
 .venv/
 .vscode/
-pokemon-showdown-0.11.9/
-pokemon-showdown-client/
+lib/*
+!lib/pokemon-showdown-0.11.9/metagross/export_moves.ts

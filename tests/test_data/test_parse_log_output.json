@@ -1,0 +1,343 @@
+{
+    "sides": [
+        {
+            "name": "Hero",
+            "pokemon": [
+                {
+                    "ident": "p1: Skarmory",
+                    "species": "Skarmory",
+                    "level": 80,
+                    "gender": "M",
+                    "condition": "0 fnt",
+                    "hp": 0,
+                    "max_hp": 100,
+                    "item": "",
+                    "ability": "sturdy",
+                    "moves": [
+                        "bravebird",
+                        "roost",
+                        "bodypress",
+                        "stealthrock"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 174,
+                        "def": 270,
+                        "spa": 110,
+                        "spd": 158,
+                        "spe": 158
+                    },
+                    "storedStats": {
+                        "atk": 174,
+                        "def": 270,
+                        "spa": 110,
+                        "spd": 158,
+                        "spe": 158
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Skarmory, L80, M"
+                },
+                {
+                    "ident": "p1: Oricorio",
+                    "species": "Oricorio-Sensu",
+                    "level": 85,
+                    "gender": "F",
+                    "condition": "266/266",
+                    "hp": 266,
+                    "max_hp": 266,
+                    "item": "heavydutyboots",
+                    "ability": "dancer",
+                    "moves": [
+                        "roost",
+                        "hurricane",
+                        "revelationdance",
+                        "quiverdance"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 124,
+                        "def": 168,
+                        "spa": 215,
+                        "spd": 168,
+                        "spe": 207
+                    },
+                    "storedStats": {
+                        "atk": 124,
+                        "def": 168,
+                        "spa": 215,
+                        "spd": 168,
+                        "spe": 207
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Oricorio-Sensu, L85, F"
+                },
+                {
+                    "ident": "p1: Skeledirge",
+                    "species": "Skeledirge",
+                    "level": 79,
+                    "gender": "F",
+                    "condition": "206/294",
+                    "hp": 206,
+                    "max_hp": 206,
+                    "item": "heavydutyboots",
+                    "ability": "unaware",
+                    "moves": [
+                        "flamecharge",
+                        "slackoff",
+                        "shadowball",
+                        "torchsong",
+                        "Shadow Ball"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 164,
+                        "def": 204,
+                        "spa": 219,
+                        "spd": 164,
+                        "spe": 150
+                    },
+                    "storedStats": {
+                        "atk": 164,
+                        "def": 204,
+                        "spa": 219,
+                        "spd": 164,
+                        "spe": 150
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Skeledirge, L79, F"
+                },
+                {
+                    "ident": "p1: Darkrai",
+                    "species": "Darkrai",
+                    "level": 77,
+                    "gender": "",
+                    "condition": "234/234",
+                    "hp": 234,
+                    "max_hp": 234,
+                    "item": "leftovers",
+                    "ability": "baddreams",
+                    "moves": [
+                        "nastyplot",
+                        "sludgebomb",
+                        "darkpulse",
+                        "substitute"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 143,
+                        "def": 183,
+                        "spa": 252,
+                        "spd": 183,
+                        "spe": 237
+                    },
+                    "storedStats": {
+                        "atk": 143,
+                        "def": 183,
+                        "spa": 252,
+                        "spd": 183,
+                        "spe": 237
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Darkrai, L77"
+                },
+                {
+                    "ident": "p1: Clefable",
+                    "species": "Clefable",
+                    "level": 83,
+                    "gender": "F",
+                    "condition": "293/293",
+                    "hp": 293,
+                    "max_hp": 293,
+                    "item": "lifeorb",
+                    "ability": "magicguard",
+                    "moves": [
+                        "fireblast",
+                        "knockoff",
+                        "moonblast",
+                        "moonlight"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 164,
+                        "def": 169,
+                        "spa": 205,
+                        "spd": 197,
+                        "spe": 147
+                    },
+                    "storedStats": {
+                        "atk": 164,
+                        "def": 169,
+                        "spa": 205,
+                        "spd": 197,
+                        "spe": 147
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Clefable, L83, F"
+                },
+                {
+                    "ident": "p1: Hitmontop",
+                    "species": "Hitmontop",
+                    "level": 88,
+                    "gender": "M",
+                    "condition": "231/231",
+                    "hp": 231,
+                    "max_hp": 231,
+                    "item": "assaultvest",
+                    "ability": "intimidate",
+                    "moves": [
+                        "stoneedge",
+                        "suckerpunch",
+                        "closecombat",
+                        "rapidspin"
+                    ],
+                    "baseStoredStats": {
+                        "atk": 217,
+                        "def": 217,
+                        "spa": 112,
+                        "spd": 244,
+                        "spe": 173
+                    },
+                    "storedStats": {
+                        "atk": 217,
+                        "def": 217,
+                        "spa": 112,
+                        "spd": 244,
+                        "spe": 173
+                    },
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Hitmontop, L88, M"
+                }
+            ],
+            "team": "123456"
+        },
+        {
+            "name": "",
+            "pokemon": [
+                {
+                    "ident": "p2: Crabominable",
+                    "species": "Crabominable",
+                    "level": 90,
+                    "gender": "M",
+                    "condition": "0 fnt",
+                    "hp": 0,
+                    "max_hp": 100,
+                    "item": "unknown_item",
+                    "ability": "unknown_ability",
+                    "moves": [
+                        "Knock Off",
+                        "Drain Punch"
+                    ],
+                    "baseStoredStats": {},
+                    "storedStats": {},
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": ""
+                },
+                {
+                    "ident": "p2: Eiscue",
+                    "species": "Eiscue",
+                    "level": 88,
+                    "gender": "M",
+                    "condition": "0 fnt",
+                    "hp": 0,
+                    "max_hp": 100,
+                    "item": "",
+                    "ability": "unknown_ability",
+                    "moves": [
+                        "Belly Drum"
+                    ],
+                    "baseStoredStats": {},
+                    "storedStats": {},
+                    "boosts": {
+                        "atk": 0,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": ""
+                },
+                {
+                    "ident": "p2: Mimikyu",
+                    "species": "Mimikyu",
+                    "level": 79,
+                    "gender": "M",
+                    "condition": "0 fnt",
+                    "hp": 0,
+                    "max_hp": 100,
+                    "item": "unknown_item",
+                    "ability": "unknown_ability",
+                    "moves": [
+                        "Swords Dance",
+                        "Shadow Sneak"
+                    ],
+                    "baseStoredStats": {},
+                    "storedStats": {},
+                    "boosts": {
+                        "atk": 2,
+                        "def": 0,
+                        "spa": 0,
+                        "spd": 0,
+                        "spe": 0,
+                        "accuracy": 0,
+                        "evasion": 0
+                    },
+                    "details": "Mimikyu-Busted, L79, M"
+                }
+            ],
+            "team": "123456"
+        }
+    ]
+}
