@@ -32,7 +32,8 @@ Simulator command parser: lib/pokemon-showdown-0.11.9/sim/battle-stream.ts
 >start {"formatid":"foo"}
 >player p1 {"name":"Alice"}
 >player p2 {"name":"Bob"}
->loadstate ./foo.txt
+>loadstate tests/test_data/test_parse_log_output.json
+
 
 // Once both players have locked in, the round resolves
 >p1 move 2
