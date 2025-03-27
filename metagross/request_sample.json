@@ -1,0 +1,210 @@
+{
+    "active": [
+        {
+            "moves": [
+                {
+                    "move": "Brave Bird",
+                    "id": "bravebird",
+                    "pp": 24,
+                    "maxpp": 24,
+                    "target": "any",
+                    "disabled": false
+                },
+                {
+                    "move": "Roost",
+                    "id": "roost",
+                    "pp": 8,
+                    "maxpp": 8,
+                    "target": "self",
+                    "disabled": false
+                },
+                {
+                    "move": "Body Press",
+                    "id": "bodypress",
+                    "pp": 15,
+                    "maxpp": 16,
+                    "target": "normal",
+                    "disabled": false
+                },
+                {
+                    "move": "Stealth Rock",
+                    "id": "stealthrock",
+                    "pp": 32,
+                    "maxpp": 32,
+                    "target": "foeSide",
+                    "disabled": false
+                }
+            ],
+            "canTerastallize": "Dragon"
+        }
+    ],
+    "side": {
+        "name": "Hero",
+        "id": "p1",
+        "pokemon": [
+            {
+                "ident": "p1: Skarmory",
+                "details": "Skarmory, L80, M",
+                "condition": "161/235",
+                "active": true,
+                "stats": {
+                    "atk": 174,
+                    "def": 270,
+                    "spa": 110,
+                    "spd": 158,
+                    "spe": 158
+                },
+                "moves": [
+                    "bravebird",
+                    "roost",
+                    "bodypress",
+                    "stealthrock"
+                ],
+                "baseAbility": "sturdy",
+                "item": "",
+                "pokeball": "pokeball",
+                "ability": "sturdy",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Dragon",
+                "terastallized": ""
+            },
+            {
+                "ident": "p1: Oricorio",
+                "details": "Oricorio-Sensu, L85, F",
+                "condition": "266/266",
+                "active": false,
+                "stats": {
+                    "atk": 124,
+                    "def": 168,
+                    "spa": 215,
+                    "spd": 168,
+                    "spe": 207
+                },
+                "moves": [
+                    "roost",
+                    "hurricane",
+                    "revelationdance",
+                    "quiverdance"
+                ],
+                "baseAbility": "dancer",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "dancer",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Fighting",
+                "terastallized": ""
+            },
+            {
+                "ident": "p1: Skeledirge",
+                "details": "Skeledirge, L79, F",
+                "condition": "294/294",
+                "active": false,
+                "stats": {
+                    "atk": 164,
+                    "def": 204,
+                    "spa": 219,
+                    "spd": 164,
+                    "spe": 150
+                },
+                "moves": [
+                    "flamecharge",
+                    "slackoff",
+                    "shadowball",
+                    "torchsong"
+                ],
+                "baseAbility": "unaware",
+                "item": "heavydutyboots",
+                "pokeball": "pokeball",
+                "ability": "unaware",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Fairy",
+                "terastallized": ""
+            },
+            {
+                "ident": "p1: Darkrai",
+                "details": "Darkrai, L77",
+                "condition": "234/234",
+                "active": false,
+                "stats": {
+                    "atk": 143,
+                    "def": 183,
+                    "spa": 252,
+                    "spd": 183,
+                    "spe": 237
+                },
+                "moves": [
+                    "nastyplot",
+                    "sludgebomb",
+                    "darkpulse",
+                    "substitute"
+                ],
+                "baseAbility": "baddreams",
+                "item": "leftovers",
+                "pokeball": "pokeball",
+                "ability": "baddreams",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Poison",
+                "terastallized": ""
+            },
+            {
+                "ident": "p1: Clefable",
+                "details": "Clefable, L83, F",
+                "condition": "293/293",
+                "active": false,
+                "stats": {
+                    "atk": 164,
+                    "def": 169,
+                    "spa": 205,
+                    "spd": 197,
+                    "spe": 147
+                },
+                "moves": [
+                    "fireblast",
+                    "knockoff",
+                    "moonblast",
+                    "moonlight"
+                ],
+                "baseAbility": "magicguard",
+                "item": "lifeorb",
+                "pokeball": "pokeball",
+                "ability": "magicguard",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": ""
+            },
+            {
+                "ident": "p1: Hitmontop",
+                "details": "Hitmontop, L88, M",
+                "condition": "231/231",
+                "active": false,
+                "stats": {
+                    "atk": 217,
+                    "def": 217,
+                    "spa": 112,
+                    "spd": 244,
+                    "spe": 173
+                },
+                "moves": [
+                    "stoneedge",
+                    "suckerpunch",
+                    "closecombat",
+                    "rapidspin"
+                ],
+                "baseAbility": "intimidate",
+                "item": "assaultvest",
+                "pokeball": "pokeball",
+                "ability": "intimidate",
+                "commanding": false,
+                "reviving": false,
+                "teraType": "Steel",
+                "terastallized": ""
+            }
+        ]
+    },
+    "rqid": 4
+}

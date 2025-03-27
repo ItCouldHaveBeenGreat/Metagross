@@ -1,11 +1,14 @@
+from abc import ABC
 import json
 import logging
 import re
+from shutil import move
 import typing
 
-PLACEHOLDER_ITEM = "unknown_item"
-PLACEHOLDER_ABILITY = "unknown_ability"
-PLACEHOLDER_MOVE = "unknown_move"
+UNKNOWN_SPECIES = "unknown_species"
+UNKNOWN_ITEM = "unknown_item"
+UNKNOWN_ABILITY = "unknown_ability"
+UNKNOWN_MOVE = "unknown_move"
 NONE_ITEM = ""  # This is how the |request json represents it :shrug:
 HOME_PLAYER = 0  # Which player id we are; this is whatever player id the request objects show up for
 
@@ -56,10 +59,10 @@ def parse_log(log_lines: list[str]) -> dict:
             player_id = __get_player_id_from_ident_or_default(parts[2], -1)
             # The request log is specially formatted and needs to be parsed differently
             if "request" == log_type:
-                player_id, pokemon_array = __parse_request_to_pokemon_array(log)
+                player_id, pokemon_entries = __parse_request_to_pokemon_array(log)
                 # TODO: Instead of straight assignment, this needs to be structured so it doesn't overwrite boosts, move pp, etc
-                for pokemon in pokemon_array:
-                    pokemon_data[pokemon["ident"]] = pokemon
+                for pokemon_entry in pokemon_entries:
+                    pokemon_data[pokemon_entry.get_ident()] = pokemon_entry
                 continue
 
             if "player" == log_type:
@@ -69,92 +72,55 @@ def parse_log(log_lines: list[str]) -> dict:
             if "-boost" == log_type:
                 stat = parts[3]
                 amount = int(parts[4])
-                if "boosts" not in pokemon_data[ident]:
-                    pokemon_data[ident]["boosts"] = {}
-                if stat not in pokemon_data[ident]["boosts"]:
-                    pokemon_data[ident]["boosts"][stat] = 0
-                pokemon_data[ident]["boosts"][stat] += amount
+                pokemon_data[ident].add_boost(stat, amount)
 
-            if "-damage" == log_type:
+            if "-damage" == log_type or "-heal" == log_type:
+                # EXAMPLE: |-damage|p1a: Skeledirge|206/294
+                # EXAMPLE: |-damage|p2a: Mimikyu|66/100|[from] item: Life Orb
                 # TODO: Damage gives us an opportunity to infer the stats of the away team pokemon; add some calcs!
                 condition = parts[3]
-                pokemon_data[ident]["condition"] = condition
-                pokemon_data[ident]["hp"] = __get_hp_from_condition(condition)
+                pokemon_data[ident].set_condition(condition)
 
             if "move" == log_type:
-                move = parts[3]
-                # TODO: Add a lookup for PP here and then track it, assuming maxpp
-                # TODO: We still need to track pp for the home player
-                if move not in pokemon_data[ident]["moves"]:
-                    pokemon_data[ident]["moves"].append(move)
+                # EXAMPLE: |move|p2a: Mimikyu|Shadow Sneak|p1a: Skeledirge
+                move_name = parts[3]
+                pokemon_data[ident].record_move_from_name(move_name)
 
             # The |request log supersedes most of the other logs, but we only have them for the home player
             if player_id != HOME_PLAYER:
                 if "-item" == log_type:
-                    item = parts[3]
-                    pokemon_data[ident]["item"] = item
+                    item = parts[3]  # TODO: Is this item name or item id?
+                    pokemon_data[ident].set_item(item)
 
                 if "-ability" == log_type:
-                    ability = parts[3]
-                    pokemon_data[ident]["ability"] = ability
+                    ability = parts[3]  # TODO: Is this ability name or ability id?
+                    pokemon_data[ident].set_ability(ability)
 
                 if "-enditem" == log_type:
-                    pokemon_data[ident]["item"] = NONE_ITEM
-
-                if "-heal" == log_type:
-                    condition = parts[3]
-                    pokemon_data[ident]["condition"] = condition
-                    pokemon_data[ident]["hp"] = int(condition.split("/")[0])
+                    pokemon_data[ident].set_item(NONE_ITEM)
 
                 if "faint" == log_type:
-                    # TODO: Zero out the boosts, and maybe other state?
-                    if ident in pokemon_data:
-                        pokemon_data[ident]["condition"] = "0 fnt"
-                        pokemon_data[ident]["hp"] = 0
+                    # EXAMPLE: |faint|p2a: Mimikyu
+                    pokemon_data[ident].mark_fainted()
 
                 if "detailschange" == log_type:
                     details = parts[3]
-                    if ident in pokemon_data:
-                        pokemon_data[ident]["details"] = details
+                    pokemon_data[ident].set_details(details)
 
                 if "switch" == log_type or "drag" == log_type:
-                    details = parts[3].split(", ")
-                    species = details[0]
-                    level = int(details[1][1:])
-                    gender = details[2] if len(details) > 2 else ""
+                    # EXAMPLE: |switch|p2a: Crabominable|Crabominable, L90, M|100/100
+                    # First, figure out if we need to initialize a new pokemon!
+                    if ident not in pokemon_data:
+                        pokemon_data[ident] = PokemonSimulatorState()
+                        pokemon_data[ident].set_ident(ident)
+                        pokemon_data[ident].set_details(parts[3])
+                    # Otherwise, we have a condition string
                     condition = parts[4]
-                    hp, max_hp = map(int, condition.split("/"))
-
-                    # TODO: There's a lot of common code/schema between this and request!
-                    pokemon = {
-                        "ident": ident,
-                        "species": species,
-                        "level": level,
-                        "gender": gender,
-                        "condition": condition,
-                        "hp": hp,
-                        "max_hp": max_hp,
-                        "item": PLACEHOLDER_ITEM,
-                        "ability": PLACEHOLDER_ABILITY,
-                        "moves": [],
-                        "baseStoredStats": {},
-                        "storedStats": {},
-                        "boosts": {
-                            "atk": 0,
-                            "def": 0,
-                            "spa": 0,
-                            "spd": 0,
-                            "spe": 0,
-                            "accuracy": 0,
-                            "evasion": 0,
-                        },
-                        "details": "",
-                    }
-                    pokemon_data[ident] = pokemon
+                    pokemon_data[ident].set_condition(condition)
 
     # Load all of the finalized pokemon into the state arrays
     for pokemon in pokemon_data.values():
-        player_id = int(pokemon["ident"][1]) - 1
+        player_id = pokemon.get_player_id()
         state["sides"][player_id]["pokemon"].append(pokemon)
 
     return state
@@ -166,27 +132,50 @@ def __parse_request_to_pokemon_array(log: str) -> typing.Tuple[int, list]:
     side_data = request_data.get("side", {})
     player_id = int(side_data.get("id", "p1")[1]) - 1
 
-    pokemons = []
+    pokemon_entries = []
     for pokemon in side_data.get("pokemon", []):
         ident = pokemon["ident"]
         stats = pokemon.get("stats", {})
-        pokemon_entry = {
-            "ident": ident,
-            "species": pokemon["details"].split(", ")[0],
-            "level": int(pokemon["details"].split(", ")[1][1:]),
-            "gender": (
-                pokemon["details"].split(", ")[2]
-                if len(pokemon["details"].split(", ")) > 2
-                else ""
-            ),
-            "condition": pokemon["condition"],
-            "hp": __get_hp_from_condition(pokemon["condition"]),
-            "max_hp": __get_max_hp_from_condition(pokemon["condition"]),
-            "item": pokemon.get("item", NONE_ITEM),
-            "ability": pokemon.get("ability", PLACEHOLDER_ABILITY),
-            "moves": pokemon.get("moves", []),
-            "baseStoredStats": stats,
-            "storedStats": stats,
+
+        pokemon_entry = PokemonSimulatorState()
+        pokemon_entry.set_ident(ident)
+        pokemon_entry.set_details(pokemon["details"])
+        pokemon_entry.set_ability(pokemon.get("ability", UNKNOWN_ABILITY))
+        pokemon_entry.set_item(pokemon.get("item", NONE_ITEM))
+        pokemon_entry.set_condition(pokemon.get("condition"))
+        pokemon_entry.set_stats(pokemon.get("stats"))
+        pokemon_entry.set_tera_type(pokemon.get("teraType"))
+        # TODO: Set if it's terastallized!
+        for move_id in pokemon.get("moves", []):
+            pokemon_entry.add_move_from_id(move_id)
+        pokemon_entries.append(pokemon_entry)
+    return player_id, pokemon_entries
+
+
+class PokemonSimulatorState(ABC):
+    def __init__(self):
+        self.ident = ""
+        self.state = {
+            "m": {},
+            "dynamaxLevel": 10,
+            "gigantamax": False,
+            "moveSlots": [],
+            "position": 0,
+            "status": "",
+            "statusState": {},
+            "volatiles": {},
+            "hpPower": 60,
+            "baseHpPower": 60,
+            # TODO: Replace the stats with a special range, e.g: {"min": 100, "max": 200}
+            "baseStoredStats": {
+                "atk": 404,
+                "def": 404,
+                "spa": 404,
+                "spd": 404,
+                "spe": 404,
+                "hp": 404,
+            },
+            "storedStats": {"atk": 404, "def": 404, "spa": 404, "spd": 404, "spe": 404},
             "boosts": {
                 "atk": 0,
                 "def": 0,
@@ -196,10 +185,194 @@ def __parse_request_to_pokemon_array(log: str) -> typing.Tuple[int, list]:
                 "accuracy": 0,
                 "evasion": 0,
             },
-            "details": pokemon["details"],
+            "lastItem": "",
+            "usedItemThisTurn": False,
+            "ateBerry": False,
+            "trapped": False,
+            "maybeTrapped": False,
+            "maybeDisabled": False,
+            "illusion": None,
+            "transformed": False,
+            "fainted": False,
+            "faintQueued": False,
+            "subFainted": None,
+            "addedType": "",
+            "knownType": True,
+            "switchFlag": False,
+            "forceSwitchFlag": False,
+            "skipBeforeSwitchOutEventFlag": False,
+            "draggedIn": None,
+            "newlySwitched": True,
+            "beingCalledBack": False,
+            "lastMove": None,
+            "lastMoveUsed": None,
+            "moveThisTurn": "",
+            "statsRaisedThisTurn": False,
+            "statsLoweredThisTurn": False,
+            "hurtThisTurn": None,
+            "lastDamage": 0,
+            "attackedBy": [],
+            "timesAttacked": 0,
+            "isActive": False,
+            "activeTurns": 0,
+            "activeMoveActions": 0,
+            "previouslySwitchedIn": 0,
+            "truantTurn": False,
+            "isStarted": False,
+            "duringMove": False,
+            "speed": 404,
+            "abilityOrder": 0,
+            "canMegaEvo": None,
+            "canUltraBurst": None,
+            "canGigantamax": None,
+            "maxhp": 404,
+            "baseMaxhp": 404,
+            "hp": 404,
+            "set": {
+                "shiny": False,
+                "moves": [],
+                "evs": {
+                    "hp": 85,
+                    "atk": 85,
+                    "def": 85,
+                    "spa": 85,
+                    "spd": 85,
+                    "spe": 85,
+                },
+                "ivs": {
+                    "hp": 31,
+                    "atk": 31,
+                    "def": 31,
+                    "spa": 31,
+                    "spd": 31,
+                    "spe": 31,
+                },
+                "role": "Stone Cold Killer",
+            },
         }
-        pokemons.append(pokemon_entry)
-    return player_id, pokemons
+        self.set_ability(UNKNOWN_ABILITY)
+        self.set_item(UNKNOWN_ITEM)
+
+    def __init(self, full_block):
+        raise NotImplementedError
+
+    def get_state(self):
+        return self.state
+
+    def get_ident(self):
+        return self.ident
+
+    def get_player_id(self):
+        return int(self.get_ident()[1]) - 1
+
+    def set_ident(self, ident: str):
+        self.ident = ident
+
+    def set_position(self, position: int):
+        self.state["position"] = position
+
+    def set_details(self, details: str):
+        parts = details.split(", ")
+        species = parts[0]
+        level = int(parts[1][1:])
+        gender = parts[2] if len(parts) >= 3 else ""  # TODO: Right genderless value?
+        self.state["baseSpecies"] = f"[Species:{species.lower()}]"
+        self.state["species"] = f"[Species:{species.lower()}]"
+        self.state["speciesState"] = {"id": species}
+        self.state["gender"] = gender
+        self.state["details"] = details
+        self.state["set"]["name"] = species
+        self.state["set"]["species"] = species
+        self.state["set"]["gender"] = gender
+        self.state["set"]["level"] = level
+
+        # Some attributes are keyed solely off of species; do a lookup!
+        # TODO: Actually do the lookup...
+        self.state["types"] = ["Fire", "Psychic"]
+        self.state["baseTypes"] = ["Fire", "Psychic"]
+        self.state["apparentType"] = "Fire/Psychic"
+        self.state["weighthg"] = 500
+
+    def set_ability(self, ability_id: str):
+        # TODO: Look up the ability name based on its id
+        ability_name = "Infiltrator"
+        self.state["baseAbility"] = ability_id
+        self.state["ability"] = ability_id
+        self.state["abilityState"] = {"id": ability_id}
+        self.state["set"]["ability"] = ability_name
+
+    def set_item(self, item_id: str):
+        # TODO: Look up the item name based on its id
+        item_name = "Life Orb"
+        self.state["item"] = item_id
+        self.state["itemState"] = {"id": item_id}
+        self.state["set"]["item"] = item_name
+
+    def set_hidden_power_type(self, hp_type: str):
+        """NOTE: In more recent gens, hidden power hasn't been a thing!"""
+        self.state["hpType"] = hp_type
+        self.state["baseHpType"] = {"id": hp_type}
+
+    def set_tera_type(self, tera_type: str):
+        self.state["teraType"] = tera_type
+        self.state["canTerastallize"] = tera_type
+        self.state["set"]["teraType"] = tera_type
+
+    def set_condition(self, condition_string: str):
+        """Set attributes based off of a condition string that we see in the showdown log"""
+        hp = self.__get_hp_from_condition(condition_string)
+        max_hp = self.__get_max_hp_from_condition(condition_string)
+        self.state["hp"] = hp
+        self.state["maxhp"] = max_hp
+        self.state["baseMaxhp"] = max_hp
+        # TODO: We need to estimate the HP when we don't actually know it. This should record the hp based stats as ranges
+        # TODO: What about the baseStoredStats of hp?
+
+    def set_stats(self, stats_dict):
+        self.state["baseStoredStats"] = stats_dict
+        self.state["storedStats"] = stats_dict
+
+    def add_boost(self, stat, amount):
+        self.state["boosts"][stat] += amount
+
+    def mark_fainted(self):
+        self.state["hp"] = 0
+
+    def record_move_from_name(self, move_name):
+        """Note that a move has been used. Will:
+        1. Add the move to the list of moves if it isn't already present
+        2. Decrement PP from the move
+        """
+        move_id = MOVE_NAME_TO_ID[move_name]
+        move_slots = self.state.get("moveSlots", [])
+        move_dict = next((move for move in move_slots if move["id"] == move_id), None)
+        if move_dict is None:
+            move_dict = self.add_move_from_id(move_id)
+        move_dict["pp"] = move_dict["pp"] - 1
+
+    def add_move_from_id(self, move_id: str) -> typing.Dict:
+        move_slots = self.state.get("moveSlots", [])
+        move_data = MOVE_ID_TO_MOVE[move_id]
+        move_dict = {
+            "move": move_id,
+            "id": move_data["name"],
+            "pp": move_data["pp"],
+            "maxpp": move_data["pp"],
+            "target": move_data["target"],
+            "disabled": False,
+            "disabledSource": "",
+            "used": False,
+        }
+        move_slots.append(move_dict)
+        self.state["moveSlots"] = move_slots
+        return move_dict
+
+    def __get_hp_from_condition(self, condition: str) -> int:
+        return 0 if condition == "0 fnt" else int(condition.split("/")[0])
+
+    def __get_max_hp_from_condition(self, condition: str) -> int:
+        # NOTE: I don't think it'll matter, but 100 isn't actually correct for p1's pokemon
+        return 100 if condition == "0 fnt" else int(condition.split("/")[0])
 
 
 def __get_ident(ident_string) -> str:
@@ -210,10 +383,6 @@ def __get_ident(ident_string) -> str:
         else:
             return ident_string[:2] + ident_string[3:]
     return ""
-
-
-def __get_position(ident_string) -> str:
-    return "TODO: implement me!"
 
 
 def __get_player_id_from_ident_or_default(ident: str, default: int) -> int:
