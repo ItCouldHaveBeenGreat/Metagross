@@ -121,7 +121,7 @@ def parse_log(log_lines: list[str]) -> dict:
     # Load all of the finalized pokemon into the state arrays
     for pokemon in pokemon_data.values():
         player_id = pokemon.get_player_id()
-        state["sides"][player_id]["pokemon"].append(pokemon)
+        state["sides"][player_id]["pokemon"].append(pokemon.get_state())
 
     return state
 
