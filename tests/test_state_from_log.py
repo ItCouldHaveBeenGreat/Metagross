@@ -17,12 +17,10 @@ def test_parse_log():
     logs = log_data["logs"]
     state = parse_log(logs)
 
-    logging.warning(MOVE_ID_TO_MOVE)
-
     # Define the expected state here
     expected_state = {}
 
-    logging.warning(f"STATE: {json.dumps(state, indent=4)}")
+    # logging.warning(f"STATE: {json.dumps(state, indent=4)}")
     state_filename = "tests/test_data/test_parse_log_output.json"
     json.dump(state, open(state_filename, "w"), indent=4)
     # assert state == expected_state
