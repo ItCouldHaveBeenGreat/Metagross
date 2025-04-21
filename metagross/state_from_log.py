@@ -117,6 +117,7 @@ def parse_log(log_lines: list[str]) -> dict:
                     # Otherwise, we have a condition string
                     condition = parts[4]
                     pokemon_data[ident].set_condition(condition)
+                    # TODO: Increment activeTurns ?
 
     # Load all of the finalized pokemon into the state arrays
     for pokemon in pokemon_data.values():

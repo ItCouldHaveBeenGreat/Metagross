@@ -22,7 +22,7 @@ class ShowdownEngine(SimulationEngine):
             text=True,
         )
         logging.info("Initiated subprocess...")
-        logging.info(f"Command: {' '.join(self.process.args)}")
+        logging.info(f"Command: {' '.join(map(str, self.process.args))}")
         logging.info(f"Process ID (PID): {self.process.pid}")
 
     def initialize_from_state(self, state_filename):
@@ -56,9 +56,9 @@ class ShowdownEngine(SimulationEngine):
 
         # We don't currently care any output before the first newline!
         logging.debug("Discarding extraneous output...")
-        while self.process.stdout.readline().strip():
-            continue
-
+        if self.process.stdout:
+            while self.process.stdout.readline().strip():
+                continue
         # Add in the second player, which triggers our first state dump
         self.__perform_action('>player p2 {"name":"p2"}\n')
         self.game_state = self.__collect_game_state()
