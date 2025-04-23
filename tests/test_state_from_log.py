@@ -33,19 +33,29 @@ class TestStateFromLog(unittest.TestCase):
         state_filename = "tests/test_data/test_parse_log_output.json"
         with open(state_filename, "w") as f:
             json.dump(state, f, indent=4)
+        # TODO: actually enable this!
         # self.assertEqual(state, expected_state)
-        logging.debug("TESTING first")
 
         # The ultimate test... is instantiating a showdown simulator instance and running a round!
+        logging.info("Initializing simulator...")
         simulator = ShowdownEngine()
         simulator.initialize_from_state(state_filename)
 
+        logging.info("Playing game to completion...")
         while not simulator.is_game_over():
             decisions = []
+            logging.info(
+                "Collecting player decisions for {}...".format(
+                    simulator.get_active_players()
+                )
+            )
             for player_id in simulator.get_active_players():
+                logging.info("Collecting game state...")
                 game_state = simulator.get_state(player_id)
+
+                logging.info("Collecting move options...")
                 options = simulator.get_move_options(player_id)
-                logging.debug(f"{player_id} options: " + ", ".join(options))
+                logging.info(f"{player_id} options: " + ", ".join(options))
                 decisions.append(
                     options[0]
                 )  # This is just a test runner; don't worry about complex decision making

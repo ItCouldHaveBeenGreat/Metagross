@@ -1,5 +1,19 @@
+# Ignore the lib folder...
+lib/*
+
+# Except for the files and edits I've made!
+!lib/pokemon-showdown-0.11.9/
+lib/pokemon-showdown-0.11.9/*
+!lib/pokemon-showdown-0.11.9/metagross/
+lib/pokemon-showdown-0.11.9/metagross/**.js
+
+# There's small edits in battle-stream.ts that are not well contained...
+!lib/pokemon-showdown-0.11.9/sim/
+lib/pokemon-showdown-0.11.9/sim/*
+!lib/pokemon-showdown-0.11.9/sim/battle-stream.ts
+
+# Standard excludes for python/ide/etc
 __pycache__/
 .venv/
 .vscode/
-lib/*
-!lib/pokemon-showdown-0.11.9/metagross/export_moves.ts
+
