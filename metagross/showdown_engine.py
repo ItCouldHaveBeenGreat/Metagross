@@ -7,6 +7,15 @@ from typing import Any, Dict, List, Optional, Set
 from metagross.simulation_engine import SimulationEngine
 
 
+# TODO: This interface is very annoyying to debug because it hides the simulator output
+#       and has very strong expectations of what it should look like. When those expectations
+#       arent met, it hangs and the caller has to timeout. The refactor should...
+#       1. If there's an error, we want to know about it
+#       2. If we get output we aren't expecting, we want to know about it
+#       3. We should be able to still use convience functions to access schema'ed data
+#
+#       It seems like we either want to debug everything we get from the simulator... actually
+#       that's so fast lets just do that now
 class ShowdownEngine(SimulationEngine):
     SHOWDOWN_EXECUTABLE_PATH = "lib/pokemon-showdown-0.11.9/pokemon-showdown"
     SIMULATE_BATTLE_COMMAND = [SHOWDOWN_EXECUTABLE_PATH, "simulate-battle"]
@@ -31,6 +40,7 @@ class ShowdownEngine(SimulationEngine):
         ]
         for command in simulate_start:
             self.__perform_action(command + "\n")
+        # We need to force hydration of state so
 
     def clone(self) -> "SimulationEngine":
         """Return a deep copy of the simulation engine"""
@@ -137,7 +147,8 @@ class ShowdownEngine(SimulationEngine):
                 logging.debug("Handling end of game...")
                 log = json.loads(self.process.stdout.readline())
                 return {"state": output_blocks[0], "log": log}
-            else:
+            elif line.strip():
+                logging.debug("[sim output]: {}".format(line))
                 output_blocks[new_lines].append(line.strip())
         # Otherwise, assume we have a standard p1/p2/state block
         dict_output = {}

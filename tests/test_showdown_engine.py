@@ -56,13 +56,11 @@ class TestShowdownEngine(unittest.TestCase):
 
         # TODO: Add some assertions for correctnes
         while not simulator.is_game_over():
-            logging.debug("TESTING")
-            print("TESTING")
             decisions = []
             for player_id in simulator.get_active_players():
                 game_state = simulator.get_state(player_id)
                 options = simulator.get_move_options(player_id)
-                logging.debug(f"{player_id} options: " + ", ".join(options))
+                logging.info(f"{player_id} options: " + ", ".join(options))
                 decisions.append(
                     options[0]
                 )  # This is just a test runner; don't worry about complex decision making
