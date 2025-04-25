@@ -7,7 +7,7 @@ lib/pokemon-showdown-0.11.9/*
 !lib/pokemon-showdown-0.11.9/metagross/
 lib/pokemon-showdown-0.11.9/metagross/**.js
 
-# There's small edits in battle-stream.ts that are not well contained...
+# There's also some small edits in battle-stream.ts that are not well contained...
 !lib/pokemon-showdown-0.11.9/sim/
 lib/pokemon-showdown-0.11.9/sim/*
 !lib/pokemon-showdown-0.11.9/sim/battle-stream.ts
