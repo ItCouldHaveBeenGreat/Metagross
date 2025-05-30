@@ -18,12 +18,17 @@ def configure_logging():
     stream_handler = logging.StreamHandler(sys.stdout)
     stream_handler.setLevel(logging.DEBUG)
 
-    # Create a formatter
-    formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+    # Create a formatter with more detailed output
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     stream_handler.setFormatter(formatter)
 
     # Add the handler to the root logger
     root_logger.addHandler(stream_handler)
+
+    # Force immediate flushing of logs
+    stream_handler.flush = lambda: None
 
 
 def timeout(seconds):

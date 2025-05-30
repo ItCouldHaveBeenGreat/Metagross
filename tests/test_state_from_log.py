@@ -6,7 +6,11 @@ import functools
 import sys
 
 from metagross.showdown_engine import ShowdownEngine
-from metagross.state_from_log import MOVE_ID_TO_MOVE, parse_log
+from metagross.state_from_log import (
+    MOVE_ID_TO_MOVE,
+    parse_log,
+    parse_log_with_speculation,
+)
 from tests.test_utils import configure_logging, timeout
 
 PLACEHOLDER_ITEM = "unknown_item"
@@ -24,44 +28,50 @@ class TestStateFromLog(unittest.TestCase):
             log_data = json.load(f)
 
         logs = log_data["logs"]
-        state = parse_log(logs)
+        # TODO: See parse_log_with_speculation's comment;
+        # state = parse_log(logs)
+        logging.debug(f"Parsing logs with speculation: {logs}")
+        state = parse_log_with_speculation(logs)
 
-        # Define the expected state here
-        expected_state = {}
-
-        # logging.warning(f"STATE: {json.dumps(state, indent=4)}")
+        logging.debug(f"Parsed state: {json.dumps(state, indent=4)}")
         state_filename = "tests/test_data/test_parse_log_output.json"
         with open(state_filename, "w") as f:
             json.dump(state, f, indent=4)
+
         # TODO: actually enable this!
+        # Define the expected state here
+        # expected_state = {}
         # self.assertEqual(state, expected_state)
 
         # The ultimate test... is instantiating a showdown simulator instance and running a round!
-        logging.info("Initializing simulator...")
+        logging.debug("Initializing simulator...")
         simulator = ShowdownEngine()
         simulator.initialize_from_state(state_filename)
 
-        logging.info("Playing game to completion...")
+        logging.debug("Playing game to completion...")
         while not simulator.is_game_over():
             decisions = []
-            logging.info(
+            logging.debug(
                 "Collecting player decisions for {}...".format(
                     simulator.get_active_players()
                 )
             )
             for player_id in simulator.get_active_players():
-                logging.info("Collecting game state...")
+                logging.debug("Collecting game state...")
                 game_state = simulator.get_state(player_id)
+                logging.debug(
+                    f"Game state for {player_id}: {json.dumps(game_state, indent=4)}"
+                )
 
-                logging.info("Collecting move options...")
+                logging.debug("Collecting move options...")
                 options = simulator.get_move_options(player_id)
-                logging.info(f"{player_id} options: " + ", ".join(options))
+                logging.debug(f"{player_id} options: " + ", ".join(options))
                 decisions.append(
                     options[0]
                 )  # This is just a test runner; don't worry about complex decision making
             simulator.make_moves(decisions)
 
-        logging.info(f"Winner: {simulator.get_winner()}")
+        logging.debug(f"Winner: {simulator.get_winner()}")
 
 
 if __name__ == "__main__":

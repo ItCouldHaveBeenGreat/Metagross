@@ -5,6 +5,8 @@ import re
 from shutil import move
 import typing
 
+from metagross.state_speculator import speculate
+
 UNKNOWN_SPECIES = "unknown_species"
 UNKNOWN_ITEM = "unknown_item"
 UNKNOWN_ABILITY = "unknown_ability"
@@ -19,20 +21,66 @@ MOVE_NAME_TO_ID = {
 }
 
 
+def parse_log_with_speculation(log_lines: list[str]) -> dict:
+    # EXTREMELY TODO: This should be invoked SEPARATELY!
+    # 1. Given a log, produce one incomplete state object (e.g: unknowns are present)
+    # 2. During the monte-carlo simulation, take this incomplete state and produce N complete state objects
+    # 3. Using the complete state objects to simulate a variety of possibilities and choose the best option
+    return speculate(parse_log(log_lines))
+
+
 def parse_log(log_lines: list[str]) -> dict:
     state = {
         "sides": [
             {
-                "name": "",
+                "name": "Hero",
+                "id": "p1",
                 "pokemon": [],
                 "team": "123456",  # TODO: this probably needs to be different for doubles
+                "choice": {
+                    "cantUndo": False,
+                    "error": "",
+                    "actions": [],
+                    "forcedSwitchesLeft": 0,
+                    "forcedPassesLeft": 0,
+                    "zMove": False,
+                    "mega": False,
+                    "ultra": False,
+                    "dynamax": False,
+                    "terastallize": False,
+                    "switchIns": [],
+                },
             },
             {
-                "name": "",
+                "name": "Villian",
+                "id": "p2",  # TODO: Is this ordering even stable? Does it matter who is p1 or p2?
                 "pokemon": [],
                 "team": "123456",  # TODO: this probably needs to be different for doubles
+                "choice": {
+                    "cantUndo": False,
+                    "error": "",
+                    "actions": [],
+                    "forcedSwitchesLeft": 0,
+                    "forcedPassesLeft": 0,
+                    "zMove": False,
+                    "mega": False,
+                    "ultra": False,
+                    "dynamax": False,
+                    "terastallize": False,
+                    "switchIns": [],
+                },
             },
-        ]
+        ],
+        "field": {
+            "weather": "",
+            "weatherState": {"id": ""},
+            "terrain": "",
+            "terrainState": {"id": ""},
+            "pseudoWeather": {},
+        },
+        "log": [],
+        "queue": [],
+        "hints": [],
     }
 
     # It's easier to deal with the pokemon when they're keyed ident -> pokemon dict
@@ -57,6 +105,9 @@ def parse_log(log_lines: list[str]) -> dict:
             # TODO: This is a lot of hassle... maybe add an allow list on log_type?
             ident = __get_ident(parts[2])
             player_id = __get_player_id_from_ident_or_default(parts[2], -1)
+
+            # TODO: Field effects, e.g: weather!
+
             # The request log is specially formatted and needs to be parsed differently
             if "request" == log_type:
                 player_id, pokemon_entries = __parse_request_to_pokemon_array(log)
@@ -366,6 +417,11 @@ class PokemonSimulatorState(ABC):
         }
         move_slots.append(move_dict)
         self.state["moveSlots"] = move_slots
+
+        # We also need to add the move to the set!
+        self.state["set"]["moves"].append(move_id)
+        print(self.state["set"]["moves"])
+
         return move_dict
 
     def __get_hp_from_condition(self, condition: str) -> int:
